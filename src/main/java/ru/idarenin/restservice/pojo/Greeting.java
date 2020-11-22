@@ -1,4 +1,4 @@
-package ru.idarenin.restservice;
+package ru.idarenin.restservice.pojo;
 
 public class Greeting {
 
