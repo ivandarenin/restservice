@@ -1,6 +1,5 @@
 package ru.idarenin.restservice.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.idarenin.restservice.pojo.Country;
 import ru.idarenin.restservice.service.CountryService;

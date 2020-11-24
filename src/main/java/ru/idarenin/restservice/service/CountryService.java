@@ -1,47 +1,42 @@
 package ru.idarenin.restservice.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import ru.idarenin.restservice.dao.CountryRepository;
 import ru.idarenin.restservice.exception.NotFoundException;
 import ru.idarenin.restservice.pojo.Country;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
-@Component
+@Service
 public class CountryService {
 
-    private List<Country> countries = new ArrayList<>();
-    private final AtomicLong counter = new AtomicLong();
+    CountryRepository repository;
 
-    public Country get(long id){
-        return countries.stream()
-                .filter(country -> country.getId() == id)
-                .findFirst()
-                .orElseThrow(NotFoundException::new);
+    public CountryService(CountryRepository repository) {
+        this.repository = repository;
+    }
+
+    public Country get(long id) {
+        return repository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     public List<Country> getAll() {
+        List<Country> countries = new ArrayList<>();
+        repository.findAll().forEach(countries::add);
         return countries;
     }
 
     public Country add(Country country) {
-        country.setId(counter.incrementAndGet());
-        countries.add(country);
-
-        return country;
+        return repository.save(country);
     }
 
     public Country update(long id, Country country) {
-        Country countryFromDB = get(id);
-
-        countryFromDB.setName(country.getName());
-        countryFromDB.setCapital(country.getCapital());
-
-        return countryFromDB;
+        country.setId(id);
+        return repository.save(country);
     }
 
     public void delete(long id) {
-        countries.removeIf(country -> country.getId() == id);
+        repository.deleteById(id);
     }
 }

@@ -1,16 +1,17 @@
 package ru.idarenin.restservice.pojo;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Country {
 
+    @Id
+    @GeneratedValue
     private long id;
     private String name;
     private String capital;
-
-    public Country(long id, String name, String capital) {
-        this.id = id;
-        this.name = name;
-        this.capital = capital;
-    }
 
     public long getId() {
         return id;
