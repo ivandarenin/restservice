@@ -1,14 +1,13 @@
 package ru.idarenin.restservice.pojo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Country {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator( name = "id_sequence", sequenceName = "id_sequence", allocationSize = 1)
+    @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "id_sequence")
     private long id;
     private String name;
     private String capital;

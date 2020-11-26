@@ -22,12 +22,11 @@ public class CountryService {
     }
 
     public List<Country> getAll() {
-        List<Country> countries = new ArrayList<>();
-        repository.findAll().forEach(countries::add);
-        return countries;
+        return new ArrayList<>(repository.findAll());
     }
 
     public Country add(Country country) {
+        country.setId(0);
         return repository.save(country);
     }
 
