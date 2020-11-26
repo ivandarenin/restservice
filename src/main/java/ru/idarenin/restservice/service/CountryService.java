@@ -28,6 +28,7 @@ public class CountryService {
     }
 
     public Country add(Country country) {
+        country.setId(0);
         return repository.save(country);
     }
 
