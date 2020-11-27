@@ -28,12 +28,13 @@ public class CountryService {
     }
 
     public Country add(Country country) {
-        country.setId(0);
+        country.setId(0); // guarantee create
         return repository.save(country);
     }
 
     public Country update(long id, Country country) {
-        country.setId(id);
+        get(id); // exists check
+        country.setId(id); //diff id in path&body check
         return repository.save(country);
     }
 
