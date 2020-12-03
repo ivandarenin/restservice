@@ -1,6 +1,7 @@
 package ru.idarenin.restservice.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.idarenin.restservice.dao.CountryRepository;
 import ru.idarenin.restservice.exception.NotFoundException;
 import ru.idarenin.restservice.pojo.Country;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class CountryService {
 
     CountryRepository repository;
@@ -17,10 +19,12 @@ public class CountryService {
         this.repository = repository;
     }
 
+    @Transactional(readOnly = true)
     public Country get(long id) {
         return repository.findById(id).orElseThrow(NotFoundException::new);
     }
 
+    @Transactional(readOnly = true)
     public List<Country> getAll() {
         return new ArrayList<>(repository.findAll());
     }
