@@ -1,5 +1,6 @@
 package ru.idarenin.restservice.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.idarenin.restservice.dao.CountryRepository;
@@ -13,11 +14,8 @@ import java.util.List;
 @Transactional
 public class CountryService {
 
-    CountryRepository repository;
-
-    public CountryService(CountryRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private CountryRepository repository;
 
     @Transactional(readOnly = true)
     public Country get(long id) {

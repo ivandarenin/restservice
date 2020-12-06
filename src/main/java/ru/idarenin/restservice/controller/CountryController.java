@@ -1,5 +1,6 @@
 package ru.idarenin.restservice.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.idarenin.restservice.pojo.Country;
 import ru.idarenin.restservice.service.CountryService;
@@ -10,11 +11,8 @@ import java.util.List;
 @RequestMapping("countries")
 public class CountryController {
 
-    private final CountryService service;
-
-    public CountryController(CountryService service) {
-        this.service = service;
-    }
+    @Autowired
+    private CountryService service;
 
     @GetMapping
     public List<Country> getAllCountries() {

@@ -5,6 +5,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
+    <property name="autoIncrement" value="false" dbms="postgresql,mssql,oracle"/>
+    <property name="autoIncrement" value="true" dbms="h2"/>
+
     <changeSet id="1" author="idarenin">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -13,7 +16,7 @@
         </preConditions>
         <createSequence sequenceName="id_sequence" incrementBy="1" startValue="1"/>
         <createTable tableName="country">
-            <column name="id" type="NUMERIC(19)" remarks="ИД" defaultValueSequenceNext="id_sequence">
+            <column name="id" type="NUMERIC(19)" remarks="ИД" autoIncrement="${autoIncrement}" defaultValueSequenceNext="id_sequence">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="VARCHAR(255)" remarks="Страна">
