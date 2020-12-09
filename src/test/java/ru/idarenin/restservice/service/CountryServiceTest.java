@@ -73,7 +73,7 @@ public class CountryServiceTest {
         Country addedCountry = addDefault();
 
         service.delete(addedCountry.getId());
-        service.get(1);
+        service.get(addedCountry.getId());
     }
 
     public Country addDefault() {
