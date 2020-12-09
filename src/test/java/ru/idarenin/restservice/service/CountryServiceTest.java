@@ -29,36 +29,58 @@ public class CountryServiceTest {
     public CountryService service;
 
     @Test
-    public void serviceMethodsTests() throws NotFoundException {
+    public void add() {
+        Country addedCountry = addDefault();
+
+        Assert.assertNotEquals(addedCountry.getId(), 0);
+        Assert.assertEquals(addedCountry.getName(), "Russia");
+        Assert.assertEquals(addedCountry.getCapital(), "Moscow");
+
+    }
+
+    @Test
+    public void getAll() {
+        addDefault();
+        Assert.assertTrue(service.getAll().size()>0);
+    }
+
+    @Test
+    public void getById() throws NotFoundException {
+        Country addedCountry = addDefault();
+
+        Country country = service.get(addedCountry.getId());
+        Assert.assertEquals(country.getId(), addedCountry.getId());
+        Assert.assertEquals(country.getName(), "Russia");
+        Assert.assertEquals(country.getCapital(), "Moscow");
+    }
+
+    @Test
+    public void update() throws NotFoundException {
+        Country addedCountry = addDefault();
+
+        Country country = new Country();
+        country.setName("RF");
+        country.setCapital("Yaroslavl");
+
+        Country changed = service.update(addedCountry.getId(), country);
+        Assert.assertEquals(changed.getId(), addedCountry.getId());
+        Assert.assertEquals(changed.getName(), "RF");
+        Assert.assertEquals(changed.getCapital(), "Yaroslavl");
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void deleteById() {
+        Country addedCountry = addDefault();
+
+        service.delete(addedCountry.getId());
+        service.get(1);
+    }
+
+    public Country addDefault() {
         Country country = new Country();
         country.setName("Russia");
         country.setCapital("Moscow");
 
-        service.add(country);
-        Long id = country.getId();
-        Assert.assertNotNull(id);
-
-        getAll();
-        getById(id);
-        update(country);
-        deleteById(id);
-    }
-
-    public void getAll() {
-        Assert.assertTrue(service.getAll().size()>0);
-    }
-
-    public void getById(Long id) throws NotFoundException {
-        Assert.assertNotNull(service.get(id));
-    }
-
-    public void update(Country country) throws NotFoundException {
-        country.setCapital("Yaroslavl");
-        service.update(country.getId(), country);
-        Assert.assertEquals("Yaroslavl", service.get(country.getId()).getCapital());
-    }
-
-    public void deleteById(Long id) {
-        service.delete(id);
+        return service.add(country);
     }
 }
